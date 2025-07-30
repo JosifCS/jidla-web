@@ -50,7 +50,7 @@ export async function Restaurant({ restaurantKey }: { restaurantKey: string }) {
         />
       );
 
-    if (menu.menudnes.dnesni_datum != new Date().toISOString().split("T").at(0))
+    if (menu.menudnes.dnesni_datum != new Date().toLocaleDateString("de"))
       return (
         <ErrorCard
           name={restaurantKey}
