@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Redis } from "@upstash/redis";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,8 +17,6 @@ export const metadata: Metadata = {
   title: "Jídla AI",
   description: "Vytvořeno s láskou k jídlu",
 };
-
-export const redis = Redis.fromEnv();
 
 export default function RootLayout({
   children,

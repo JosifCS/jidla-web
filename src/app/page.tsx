@@ -1,6 +1,8 @@
 import { Restaurant, RestaurantSkeleton } from "@/components/restaurant";
-import { redis } from "./layout";
+import { Redis } from "@upstash/redis";
 import { Suspense } from "react";
+
+const redis = Redis.fromEnv();
 
 export default async function Page() {
   const restaurants = await redis.keys("*");

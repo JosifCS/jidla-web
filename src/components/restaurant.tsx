@@ -1,9 +1,11 @@
-import { redis } from "@/app/layout";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "./ui/skeleton";
 import { CircleXIcon, SoupIcon, UtensilsIcon } from "lucide-react";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 type RestaruantMenu = {
   error?: string;
