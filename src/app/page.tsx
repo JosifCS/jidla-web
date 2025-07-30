@@ -24,6 +24,7 @@ export default async function Page() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {restaurants.map((restaurant) => (
             <Suspense
+              key={restaurant}
               fallback={<RestaurantSkeleton restaurantKey={restaurant} />}
             >
               <Restaurant restaurantKey={restaurant} />
