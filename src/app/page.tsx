@@ -1,5 +1,6 @@
-import { Restaurant } from "@/components/restaurant";
+import { Restaurant, RestaurantSkeleton } from "@/components/restaurant";
 import { redis } from "./layout";
+import { Suspense } from "react";
 
 export default async function Page() {
   const restaurants = await redis.keys("*");
@@ -22,7 +23,11 @@ export default async function Page() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {restaurants.map((restaurant) => (
-            <Restaurant restaurantKey={restaurant} />
+            <Suspense
+              fallback={<RestaurantSkeleton restaurantKey={restaurant} />}
+            >
+              <Restaurant restaurantKey={restaurant} />
+            </Suspense>
           ))}
         </div>
 
