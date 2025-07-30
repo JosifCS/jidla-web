@@ -2,7 +2,7 @@
 
 Webové rozhraní pro Michalovo jídelníčky vybraných plzeňských restaruací, které tahá z hlubin internetu.
 
-[Vyzkoušejte zde](https://jidla-web.vercel.app/)
+[Vyzkoušejte zde](https://jidla.vercel.app/)
 
 Používá Next.js, Tailwind a Redis.
 
