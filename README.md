@@ -1,28 +1,11 @@
----
-title: Next.js with Redis
-products: ["redis"]
-stack: ["Next.js"]
-use_cases: ["State Store"]
-languages: ["js"]
-author: "CahidArda"
----
+# Jídla AI web
 
-<br />
-<div align="center">
+Webové rozhraní pro Michalovo jídelníčky vybraných plzeňských restaruací, které tahá z hlubin internetu.
 
-  <h3 align="center">Next.js with Redis</h3>
+[Vyzkoušejte zde](https://jidla-web.vercel.app/)
 
-  <p align="center">
-   Transform your Next.js applications with Redis as a state holder, enabling efficient state management, scalability, and real-time updates for an enhanced user experience.
-  </p>
-</div>
+Používá Next.js, Tailwind a Redis.
 
-### Learn More
-
-To learn more about Upstash and its services, check out the following resources:
-
-- [Documentation](https://docs.upstash.com)
-- [Website](https://upstash.com)
-- [Blog](https://upstash.com/blog)
-- [Console](https://console.upstash.com)
-- [Discord](https://upstash.com/discord)
+## Proměnné prostředí
+- UPSTASH_REDIS_REST_URL
+- UPSTASH_REDIS_REST_TOKEN
