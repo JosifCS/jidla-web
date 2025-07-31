@@ -9,6 +9,17 @@ export default async function Page() {
   const restaurants = await redis.keys("*");
   const favorites = await getCookieFavorites();
 
+  const favoritesSet = new Set(favorites);
+
+  const sortedRestaurants = restaurants.sort((a, b) => {
+    const aIsFavorite = favoritesSet.has(a);
+    const bIsFavorite = favoritesSet.has(b);
+
+    if (aIsFavorite && !bIsFavorite) return -1;
+    else if (!aIsFavorite && bIsFavorite) return 1;
+    else return 0;
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <div className="container mx-auto px-4 py-8">
@@ -26,7 +37,7 @@ export default async function Page() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {restaurants.map((restaurant) => (
+          {sortedRestaurants.map((restaurant) => (
             <Suspense
               key={restaurant}
               fallback={<RestaurantSkeleton restaurantKey={restaurant} />}
