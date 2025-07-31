@@ -10,7 +10,9 @@ export async function getCookieFavorites(): Promise<string[]> {
     const d = JSON.parse(obj);
 
     if (Array.isArray(d)) return d;
-  } catch (e: unknown) {}
+  } catch (e: unknown) {
+    console.log(e);
+  }
 
   return [];
 }
