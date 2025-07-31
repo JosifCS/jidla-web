@@ -4,10 +4,18 @@ import { Skeleton } from "./ui/skeleton";
 import { CircleXIcon, SoupIcon, UtensilsIcon } from "lucide-react";
 import { Redis } from "@upstash/redis";
 import { MenuCard, RestaruantMenu } from "./menu-card";
+import { Favorite } from "./favorite";
+import { toggleFavorite } from "@/actions/toggle-favorite";
 
 const redis = Redis.fromEnv();
 
-export async function Restaurant({ restaurantKey }: { restaurantKey: string }) {
+export async function Restaurant({
+  restaurantKey,
+  favorite,
+}: {
+  restaurantKey: string;
+  favorite: boolean;
+}) {
   try {
     const menu = await redis.json.get<RestaruantMenu>(restaurantKey);
 
@@ -17,6 +25,7 @@ export async function Restaurant({ restaurantKey }: { restaurantKey: string }) {
           name={restaurantKey}
           title="Neplatný klíč"
           description="Neplatný klíč"
+          favorite={favorite}
         />
       );
 
@@ -26,6 +35,7 @@ export async function Restaurant({ restaurantKey }: { restaurantKey: string }) {
           name={restaurantKey}
           title="Neplatná data z API"
           description={menu.error}
+          favorite={favorite}
         />
       );
 
@@ -35,6 +45,7 @@ export async function Restaurant({ restaurantKey }: { restaurantKey: string }) {
           name={restaurantKey}
           title="Neplatná data v menudnes"
           description="Neplatná data v menudnes"
+          favorite={favorite}
         />
       );
 
@@ -44,16 +55,20 @@ export async function Restaurant({ restaurantKey }: { restaurantKey: string }) {
           name={restaurantKey}
           title="Data pro jiný den"
           description={menu.menudnes.dnesni_datum}
+          favorite={favorite}
         />
       );
 
-    return <MenuCard name={restaurantKey} menu={menu.menudnes} />;
+    return (
+      <MenuCard name={restaurantKey} menu={menu.menudnes} favorite={favorite} />
+    );
   } catch (e: unknown) {
     return (
       <ErrorCard
         name={restaurantKey}
         title="Chyba dotazu na API"
         description={(e as Error).message}
+        favorite={favorite}
       />
     );
   }
@@ -63,16 +78,26 @@ function ErrorCard({
   title,
   description,
   name,
+  favorite,
 }: {
   title: string;
   description: string;
   name: string;
+  favorite: boolean;
 }) {
   return (
     <Card className="">
       <CardHeader>
-        <CardTitle className="text-xl">{name}</CardTitle>
+        <CardTitle className="text-xl flex justify-between">
+          {name}
+          <Favorite
+            defaultPressed={favorite}
+            restaurantKey={name}
+            onToggle={toggleFavorite}
+          />
+        </CardTitle>
       </CardHeader>
+
       <CardContent className="space-y-2">
         <h4 className="flex gap-2 font-semibold text-orange-600">
           <CircleXIcon /> {title}

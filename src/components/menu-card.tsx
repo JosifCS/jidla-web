@@ -1,7 +1,10 @@
-import { SoupIcon, UtensilsIcon } from "lucide-react";
+import { HeartIcon, SoupIcon, UtensilsIcon } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
+import { Toggle } from "./ui/toggle";
+import { Favorite } from "./favorite";
+import { toggleFavorite } from "@/actions/toggle-favorite";
 
 export type RestaruantMenu = {
   error?: string;
@@ -18,14 +21,23 @@ export type RestaruantMenu = {
 export function MenuCard({
   name,
   menu,
+  favorite,
 }: {
   name: string;
   menu: NonNullable<RestaruantMenu["menudnes"]>;
+  favorite: boolean;
 }) {
   return (
     <Card className="overflow-hidden">
       <CardHeader>
-        <CardTitle className="text-xl">{name}</CardTitle>
+        <CardTitle className="text-xl flex justify-between">
+          {name}
+          <Favorite
+            defaultPressed={favorite}
+            restaurantKey={name}
+            onToggle={toggleFavorite}
+          />
+        </CardTitle>
       </CardHeader>
 
       <CardContent>

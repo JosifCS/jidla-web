@@ -1,4 +1,5 @@
 import { Restaurant, RestaurantSkeleton } from "@/components/restaurant";
+import { getCookieFavorites } from "@/server/get-cookies-favorites";
 import { Redis } from "@upstash/redis";
 import { Suspense } from "react";
 
@@ -6,6 +7,7 @@ const redis = Redis.fromEnv();
 
 export default async function Page() {
   const restaurants = await redis.keys("*");
+  const favorites = await getCookieFavorites();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -29,7 +31,10 @@ export default async function Page() {
               key={restaurant}
               fallback={<RestaurantSkeleton restaurantKey={restaurant} />}
             >
-              <Restaurant restaurantKey={restaurant} />
+              <Restaurant
+                restaurantKey={restaurant}
+                favorite={favorites.includes(restaurant)}
+              />
             </Suspense>
           ))}
         </div>
