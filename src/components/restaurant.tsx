@@ -1,23 +1,11 @@
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "./ui/skeleton";
 import { CircleXIcon, SoupIcon, UtensilsIcon } from "lucide-react";
 import { Redis } from "@upstash/redis";
+import { MenuCard, RestaruantMenu } from "./menu-card";
 
 const redis = Redis.fromEnv();
-
-type RestaruantMenu = {
-  error?: string;
-  menudnes?: {
-    hlavni: {
-      cena: string;
-      nazev: string;
-    }[];
-    polevky: { cena: string; nazev: string }[];
-    dnesni_datum: string;
-  };
-};
 
 export async function Restaurant({ restaurantKey }: { restaurantKey: string }) {
   try {
@@ -90,61 +78,6 @@ function ErrorCard({
           <CircleXIcon /> {title}
         </h4>
         <p>{description}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function MenuCard({
-  name,
-  menu,
-}: {
-  name: string;
-  menu: NonNullable<RestaruantMenu["menudnes"]>;
-}) {
-  return (
-    <Card className="overflow-hidden">
-      <CardHeader>
-        <CardTitle className="text-xl">{name}</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <div className="space-y-4">
-          <div>
-            <h4 className="flex gap-2 font-semibold text-orange-600 mb-2">
-              <SoupIcon /> Polévky
-            </h4>
-            <div className="space-y-2">
-              {menu.polevky.map((x, i) => (
-                <div key={i} className="flex justify-between items-start">
-                  <p className="font-medium text-gray-900">{x.nazev}</p>
-                  <Badge variant="outline" className="ml-2 font-semibold">
-                    {x.cena}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </div>
-          <Separator />
-
-          <div>
-            <h4 className="flex gap-2 font-semibold text-orange-600 mb-3">
-              <UtensilsIcon /> Hlavní chody
-            </h4>
-            <div className="space-y-2">
-              {menu.hlavni.map((x, i) => (
-                <div key={i} className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">{x.nazev}</p>
-                  </div>
-                  <Badge variant="outline" className="ml-2 font-semibold">
-                    {x.cena}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
