@@ -1,5 +1,11 @@
 import { SoupIcon, UtensilsIcon } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
 import { Favorite } from "./favorite";
@@ -13,18 +19,23 @@ export type RestaruantMenu = {
       nazev: string;
     }[];
     polevky: { cena: string; nazev: string }[];
+    /** YYYY-MM-DD */
     dnesni_datum: string;
   };
+  /** ISO Date */
+  checked?: string;
 };
 
 export function MenuCard({
   name,
   menu,
   favorite,
+  checked,
 }: {
   name: string;
   menu: NonNullable<RestaruantMenu["menudnes"]>;
   favorite: boolean;
+  checked: string | undefined;
 }) {
   return (
     <Card className="overflow-hidden">
@@ -38,7 +49,6 @@ export function MenuCard({
           />
         </CardTitle>
       </CardHeader>
-
       <CardContent>
         <div className="space-y-4">
           <div>
@@ -50,7 +60,7 @@ export function MenuCard({
                 <div key={i} className="flex justify-between items-start">
                   <p className="font-medium text-gray-900">{x.nazev}</p>
                   <Badge variant="outline" className="ml-2 font-semibold">
-                    {x.cena}
+                    {formatPrice(x.cena)}
                   </Badge>
                 </div>
               ))}
@@ -69,7 +79,7 @@ export function MenuCard({
                     <p className="font-medium text-gray-900">{x.nazev}</p>
                   </div>
                   <Badge variant="outline" className="ml-2 font-semibold">
-                    {x.cena}
+                    {formatPrice(x.cena)}
                   </Badge>
                 </div>
               ))}
@@ -77,6 +87,22 @@ export function MenuCard({
           </div>
         </div>
       </CardContent>
+
+      {checked && (
+        <CardFooter className="text-xs justify-end text-gray-500">
+          ({new Date(checked).toLocaleString()})
+        </CardFooter>
+      )}
     </Card>
   );
+}
+
+function formatPrice(price: string) {
+  if (price.length == 0) return "?";
+
+  return Number(price.replace(/\D/g, "")).toLocaleString("cs", {
+    style: "currency",
+    currency: "CZK",
+    maximumFractionDigits: 0,
+  });
 }

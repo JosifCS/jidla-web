@@ -60,7 +60,12 @@ export async function Restaurant({
       );
 
     return (
-      <MenuCard name={restaurantKey} menu={menu.menudnes} favorite={favorite} />
+      <MenuCard
+        name={restaurantKey}
+        menu={menu.menudnes}
+        checked={menu.checked}
+        favorite={favorite}
+      />
     );
   } catch (e: unknown) {
     return (
