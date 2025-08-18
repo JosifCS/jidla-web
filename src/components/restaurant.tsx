@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "./ui/skeleton";
 import { CircleXIcon, SoupIcon, UtensilsIcon } from "lucide-react";
@@ -26,6 +26,7 @@ export async function Restaurant({
           title="Neplatný klíč"
           description="Neplatný klíč"
           favorite={favorite}
+          checked={undefined}
         />
       );
 
@@ -36,6 +37,7 @@ export async function Restaurant({
           title="Neplatná data z API"
           description={menu.error}
           favorite={favorite}
+          checked={menu.checked}
         />
       );
 
@@ -46,6 +48,7 @@ export async function Restaurant({
           title="Neplatná data v menudnes"
           description="Neplatná data v menudnes"
           favorite={favorite}
+          checked={menu.checked}
         />
       );
 
@@ -56,6 +59,7 @@ export async function Restaurant({
           title="Data pro jiný den"
           description={menu.menudnes.dnesni_datum}
           favorite={favorite}
+          checked={menu.checked}
         />
       );
 
@@ -74,6 +78,7 @@ export async function Restaurant({
         title="Chyba dotazu na API"
         description={(e as Error).message}
         favorite={favorite}
+        checked={undefined}
       />
     );
   }
@@ -84,14 +89,16 @@ function ErrorCard({
   description,
   name,
   favorite,
+  checked
 }: {
   title: string;
   description: string;
   name: string;
   favorite: boolean;
+  checked: string | undefined;
 }) {
   return (
-    <Card className="">
+    <Card className="flex flex-col">
       <CardHeader>
         <CardTitle className="text-xl flex justify-between">
           {name}
@@ -103,12 +110,18 @@ function ErrorCard({
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-2">
+      <CardContent className="space-y-2 flex-grow">
         <h4 className="flex gap-2 font-semibold text-orange-600">
           <CircleXIcon /> {title}
         </h4>
         <p>{description}</p>
       </CardContent>
+
+      {checked && (
+        <CardFooter className="text-xs justify-end text-gray-500">
+          ({new Date(checked).toLocaleString("cs", {timeZone: "Europe/Prague"})})
+        </CardFooter>
+      )}
     </Card>
   );
 }
@@ -119,12 +132,12 @@ export async function RestaurantSkeleton({
   restaurantKey: string;
 }) {
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
       <CardHeader>
         <CardTitle className="text-xl">{restaurantKey}</CardTitle>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="flex-grow">
         <div className="space-y-4">
           <div>
             <h4 className="flex gap-2 font-semibold text-orange-600 mb-2">

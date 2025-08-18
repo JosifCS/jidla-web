@@ -90,7 +90,7 @@ export function MenuCard({
 
       {checked && (
         <CardFooter className="text-xs justify-end text-gray-500">
-          ({new Date(checked).toLocaleString()})
+          ({new Date(checked).toLocaleString("cs", {timeZone: "Europe/Prague"})})
         </CardFooter>
       )}
     </Card>
