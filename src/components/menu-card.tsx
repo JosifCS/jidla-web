@@ -90,7 +90,11 @@ export function MenuCard({
 
       {checked && (
         <CardFooter className="text-xs justify-end text-gray-500">
-          ({new Date(checked).toLocaleString("cs", {timeZone: "Europe/Prague"})})
+          (
+          {new Date(checked).toLocaleString("cs", {
+            timeZone: "Europe/Prague",
+          })}
+          )
         </CardFooter>
       )}
     </Card>
@@ -100,7 +104,7 @@ export function MenuCard({
 function formatPrice(price: string) {
   if (price.length == 0) return "?";
 
-  return Number(price.replace(/\D/g, "")).toLocaleString("cs", {
+  return Number(`${price}`.replace(/\D/g, "")).toLocaleString("cs", {
     style: "currency",
     currency: "CZK",
     maximumFractionDigits: 0,
