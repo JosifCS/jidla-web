@@ -15,7 +15,7 @@ export type RestaruantMenu = {
   error?: string;
   menudnes?: {
     hlavni: {
-      cena: string;
+      cena: string | number;
       nazev: string;
     }[];
     polevky: { cena: string; nazev: string }[];
@@ -101,8 +101,8 @@ export function MenuCard({
   );
 }
 
-function formatPrice(price: string) {
-  if (price.length == 0) return "?";
+function formatPrice(price: string | number) {
+  if (typeof price === "string" && price.length == 0) return "?";
 
   return Number(`${price}`.replace(/\D/g, "")).toLocaleString("cs", {
     style: "currency",
