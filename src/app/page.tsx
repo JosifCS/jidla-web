@@ -1,8 +1,7 @@
-import { prolongFavorite } from "@/actions/prolong-favorite";
 import { Restaurant, RestaurantSkeleton } from "@/components/restaurant";
 import { getCookieFavorites } from "@/server/get-cookies-favorites";
 import { Redis } from "@upstash/redis";
-import { cookies } from "next/headers";
+
 import { Suspense } from "react";
 
 const redis = Redis.fromEnv();

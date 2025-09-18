@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 export async function toggleFavorite(restaurantKey: string) {
   const c = await cookies();
-  const favorites = await getCookieFavorites(c);
+  const favorites = await getCookieFavorites();
   const newFavorites = JSON.stringify(
     favorites.includes(restaurantKey)
       ? favorites.filter((x) => x != restaurantKey)
