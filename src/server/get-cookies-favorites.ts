@@ -1,8 +1,11 @@
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 
-export async function getCookieFavorites(): Promise<string[]> {
-  const c = await cookies();
-  const obj = c.get("favorite")?.value;
+export async function getCookieFavorites(
+  c?: ReadonlyRequestCookies
+): Promise<string[]> {
+  const cc = c ?? (await cookies());
+  const obj = cc.get("favorite")?.value;
 
   if (obj == null) return [];
 
